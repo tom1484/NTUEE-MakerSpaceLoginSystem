@@ -1,19 +1,28 @@
 {
-  "name": "mongoose_test",
+  "name": "ntuee-makerspaceloginsystem",
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "devStart": "nodemon app.js"
+    "test": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tom1484/NTUEE-MakerSpaceLoginSystem.git"
   },
   "author": "",
   "license": "ISC",
-  "devDependencies": {
+  "bugs": {
+    "url": "https://github.com/tom1484/NTUEE-MakerSpaceLoginSystem/issues"
+  },
+  "homepage": "https://github.com/tom1484/NTUEE-MakerSpaceLoginSystem#readme",
+  "dependencies": {
+    "crypto": "^1.0.1",
+    "express": "^4.17.3",
+    "mongoose": "^6.2.3",
     "nodemon": "^2.0.15"
   },
-  "dependencies": {
-    "express": "^4.17.3",
-    "mongoose": "^6.2.2"
+  "devDependencies": {
+    "kill-port": "^1.6.1"
   }
 }
