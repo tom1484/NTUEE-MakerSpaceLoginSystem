@@ -4,18 +4,13 @@ from datetime import datetime
 from time import time
 
 BASE_URL = 'http://localhost:1484'
-API_AUTH = '/mks_access/statistics'
-# API_AUTH = '/mks_access/update'
+API_AUTH = '/mks_access/update'
 
 session = requests.Session()
 
 _data = {
-    # "RFID": "123", 
-    # "timestamp": "2022-02-24 00:00:00"
-    "range": {
-        "start": "2022-02-23 00:00:00", 
-        "end": "2022-02-25 00:00:00"
-    }
+    "RFID": "7511D248",
+    "timestamp": "2022-02-24 00:00:" + str(input("sec: "))
 }
 
 req = session.post(

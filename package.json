@@ -2,9 +2,9 @@
   "name": "ntuee-makerspaceloginsystem",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "app/app.js",
   "scripts": {
-    "test": "nodemon app.js"
+    "test": "nodemon app/app.js"
   },
   "repository": {
     "type": "git",

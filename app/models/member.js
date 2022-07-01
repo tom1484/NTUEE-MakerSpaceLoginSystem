@@ -24,10 +24,10 @@ const memberSchema = new mongoose.Schema({
 		required: true, 
 		immutable: true, 
 	}, 
-	modifiedTime: {
-		type: String, 
-		default: "", 
-	}, 
+	// modifiedTime: {
+	// 	type: String, 
+	// 	default: "", 
+	// }, 
 })
 
 module.exports = mongoose.model("member", memberSchema)
