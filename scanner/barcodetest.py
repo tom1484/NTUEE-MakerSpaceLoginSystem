@@ -1,7 +1,7 @@
 import serial
 import requests
 import json
-from datetime import datetime
+import datetime
 import time as t
 import string
 import tkinter as tk
@@ -96,7 +96,7 @@ while True:
             pass
 '''
 def task():
-    global text
+    global text, start_time
     rfid_data = rfid.readline().decode('utf-8').replace(' ','').rstrip()
     if (len(rfid_data) == 8 and rfid_data.isalnum() and rfid_data.isupper()):  
         if not sending_data(rfid_data):##new rfid
@@ -109,8 +109,8 @@ def task():
             barcode_result = scan_barcode(rfid_data)
             print(barcode_result)
             text.set(barcode_result)
-        else:
-            pass
+        start_time = int(t.time()*1000) + 2500
+
 
 # start of program
 #================Connecting barcode scanner============
@@ -163,15 +163,42 @@ root = tk.Tk()
 root.geometry('300x100')
 
 text = tk.StringVar()
-text.set("Hello World!")
+text.set(get_timestamp())
 
 label = tk.Label(root, textvariable = text)
 label.pack()
+
+'''
+time_p = -1
+time = 0
+t_counter = 0
+
+while True:
+    time_p = time
+    time = int(datetime.datetime.now().strftime('%f'))
+    if(time>500000 and t_counter ==0):
+        print("sfs")
+        t_counter = 1
+    if(time<time_p):
+        print("gdg")
+        t_counter = 0
+    task()
+    root.update_idletasks()
+    root.update()
+'''
+
+start_time = int(t.time()*1000)
 
 while True:
     task()
     root.update_idletasks()
     root.update()
-
+    time_now = int(t.time()*1000)
+    
+    if (time_now - start_time > 500):
+        start_time = time_now
+        text.set(get_timestamp())
+        print("HI")
+        
 
         
