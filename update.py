@@ -10,7 +10,7 @@ session = requests.Session()
 
 _data = {
     "RFID": "7511D248",
-    "timestamp": "2022-02-24 00:00:" + str(input("sec: "))
+    "timestamp": "2022-06-29 00:00:00"
 }
 
 req = session.post(
