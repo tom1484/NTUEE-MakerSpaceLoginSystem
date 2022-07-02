@@ -9,7 +9,8 @@ API_AUTH = '/mks_access/update'
 session = requests.Session()
 
 _data = {
-    "RFID": "7511D248",
+    # "RFID": "7511D248",
+    "RFID": "TESTTEST",
     "timestamp": "2022-06-29 00:00:00"
 }
 
