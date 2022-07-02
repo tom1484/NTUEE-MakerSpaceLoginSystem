@@ -54,13 +54,15 @@ def sending_data(rfid_data):
     #return if the flag is true or false
     if req_dict['flag']:
         print(req_dict['personalInfo']['studentID'])
-        text.set(req_dict['personalInfo']['studentID'])
+        show_word = "Welcome, " + str(req_dict['personalInfo']['studentID'])
+        text.set(show_word)
 
     return req_dict['flag']
 
 def scan_barcode(rfid_data):
-    global text
-    while(True):
+    global text, label
+    start_time = t.time()
+    while(t.time() < start_time + 30):
         barcode_data = barcode.readline().decode('ASCII')
         if (len(barcode_data) > 0):
             print(barcode_data)
@@ -79,9 +81,11 @@ def scan_barcode(rfid_data):
                 return barcode_data[:-1]
             else:
                 print("not student id")
-                text.set("not student id")
+                text.set("Not student id!\n\nScan again.")
+                label.configure(bg = 'red')
                 root.update_idletasks()
                 root.update()
+    return 0
             
 
 '''
@@ -96,19 +100,27 @@ while True:
             pass
 '''
 def task():
-    global text, start_time
+    global label, text, start_time
     rfid_data = rfid.readline().decode('utf-8').replace(' ','').rstrip()
     if (len(rfid_data) == 8 and rfid_data.isalnum() and rfid_data.isupper()):  
         if not sending_data(rfid_data):##new rfid
             print("new user,plz scan ur student id card")
             
-            text.set("new user,plz scan ur student id card")
+            # text.set("new user,plz scan ur student id card")
+            text.set("Hello, newcomer\n\nPlease scan your ID barcode.")
+            label.configure(bg = 'orange')
             root.update_idletasks()
             root.update()
             
             barcode_result = scan_barcode(rfid_data)
             print(barcode_result)
-            text.set(barcode_result)
+            if (barcode_result == 0):
+                start_time = int(t.time()*1000) - 500
+                return
+            
+            show_word = "Nice to meet you!\n\n" + barcode_result
+            text.set(show_word)
+        label.configure(bg = 'green')
         start_time = int(t.time()*1000) + 2500
 
 
@@ -160,13 +172,22 @@ API_AUTH_REGISTER = '/mks_access/register'
 session = requests.Session()
 
 root = tk.Tk()
-root.geometry('300x100')
+root.configure(bg="black")
+# root.geometry('300x100')
+root.attributes("-fullscreen", True)
+
 
 text = tk.StringVar()
 text.set(get_timestamp())
 
-label = tk.Label(root, textvariable = text)
-label.pack()
+label = tk.Label(root, textvariable = text, bg = "#000", font = ("Times 96"), fg = "#fff")
+label.pack(ipadx = 800, ipady = 500)
+# label.pack(fill = BOTH)
+
+def close(event):
+    global root
+    root.destroy()
+    exit(1)
 
 '''
 time_p = -1
@@ -188,17 +209,18 @@ while True:
 '''
 
 start_time = int(t.time()*1000)
+root.bind("<Control-c>", close)
 
 while True:
     task()
     root.update_idletasks()
     root.update()
     time_now = int(t.time()*1000)
+    rfid.flushInput()
+    barcode.flushInput()
     
     if (time_now - start_time > 500):
         start_time = time_now
-        text.set(get_timestamp())
-        print("HI")
-        
-
-        
+        show_word = "NTUEE MakerSpace\n\n" + get_timestamp()
+        text.set(show_word)
+        label.configure(bg = "#000")
