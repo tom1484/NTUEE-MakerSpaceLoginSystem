@@ -67,7 +67,7 @@ def sending_data(rfid_data):
 def scan_barcode(rfid_data):
     global text, label
     start_time = t.time()
-    while(t.time() < start_time + 20):  #escape after 20 seconds
+    while(t.time() < start_time + 20):  #escape after 20 second
         barcode_data = barcode.readline().decode('ASCII')
         if (len(barcode_data) > 0):
             print(barcode_data)
@@ -140,7 +140,7 @@ def task():
             print("new user,plz scan ur student id card")
             
             # text.set("new user,plz scan ur student id card")
-            text.set("您好！新朋友\n\n請在下方掃描器\n掃描學生證上的條碼")
+            text.set("您好！新朋友\n\n請在下方掃描器\n掃描學生證上的條碼\n\n（請隔一小段距離）")
             label.configure(bg = 'purple')
             root.update_idletasks()
             root.update()
@@ -243,6 +243,7 @@ while True:
 
 start_time = int(t.time()*1000)
 root.bind("<Control-c>", close)
+root.config(cursor="none")
 
 while True:
     task()
