@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import serial
 import requests
 import json
@@ -45,7 +47,7 @@ def sending_data(rfid_data):
         "timestamp": time_stamp
     }
     print("working...")
-    text.set("working...")
+    text.set("請稍候......")
     root.update_idletasks()
     root.update()
     req = session.post(
@@ -57,7 +59,7 @@ def sending_data(rfid_data):
     #return if the flag is true or false
     if req_dict['flag']:
         print(req_dict['personalInfo']['studentID'])
-        show_word = "Welcome, " + str(req_dict['personalInfo']['studentID'])
+        show_word = "您好，" + str(req_dict['personalInfo']['displayName'])
         text.set(show_word)
 
     return req_dict['flag']
@@ -65,12 +67,12 @@ def sending_data(rfid_data):
 def scan_barcode(rfid_data):
     global text, label
     start_time = t.time()
-    while(t.time() < start_time + 10):
+    while(t.time() < start_time + 20):  #escape after 20 seconds
         barcode_data = barcode.readline().decode('ASCII')
         if (len(barcode_data) > 0):
             print(barcode_data)
             
-            if(barcode_data[0].isupper() and barcode_data[1:-1].isdigit() and barcode_data[-1]=="0"):
+            if(barcode_data[0].isupper() and barcode_data[1:-1].isdigit()):
                 # doing register
                 time_stamp = get_timestamp()
                 _data = {
@@ -91,7 +93,7 @@ def scan_barcode(rfid_data):
                         "timestamp": time_stamp
                     }
                 print("working...")
-                text.set("working...")
+                text.set("請稍候......")
                 root.update_idletasks()
                 root.update()
                 req = session.post(
@@ -101,7 +103,7 @@ def scan_barcode(rfid_data):
                 req_dict = req.json()
                 if not req_dict['flag']:
                     print("ERROR")
-                    text.set("ERROR!\n\nPlease inform Administrator")
+                    text.set("錯誤！\n\n請通知管理員")
                     label.configure(bg = "red")
                     root.update_idletasks()
                     root.update()
@@ -112,7 +114,7 @@ def scan_barcode(rfid_data):
             
             else:
                 print("not student id")
-                text.set("Not student id!\n\nScan again.")
+                text.set("非學號格式\n\n請重新掃描")
                 label.configure(bg = 'red')
                 root.update_idletasks()
                 root.update()
@@ -138,8 +140,8 @@ def task():
             print("new user,plz scan ur student id card")
             
             # text.set("new user,plz scan ur student id card")
-            text.set("Hello, newcomer\n\nPlease scan your ID barcode.")
-            label.configure(bg = 'orange')
+            text.set("您好！新朋友\n\n請在下方掃描器\n掃描學生證上的條碼")
+            label.configure(bg = 'purple')
             root.update_idletasks()
             root.update()
             
@@ -149,7 +151,7 @@ def task():
                 start_time = int(t.time()*1000) - 500
                 return
             
-            show_word = "Nice to meet you!\n\n" + barcode_result
+            show_word = "歡迎加入，" + barcode_result + "\n\n(您可以請管理員改變顯示名稱)"
             text.set(show_word)
         label.configure(bg = 'green')
         start_time = int(t.time()*1000) + 2500
@@ -252,6 +254,6 @@ while True:
     
     if (time_now - start_time > 500):
         start_time = time_now
-        show_word = "NTUEE MakerSpace\n\n" + get_timestamp()
+        show_word = "NTUEE MakerSpace\n\n" + get_timestamp() + "\n\n請用學生證掃描右方 →"
         text.set(show_word)
         label.configure(bg = "#000")
