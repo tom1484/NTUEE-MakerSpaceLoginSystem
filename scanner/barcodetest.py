@@ -34,7 +34,7 @@ def get_timestamp():
     return time_stamp
 
 def sending_data(rfid_data):
-    global text
+    global text, root
     print(rfid_data)
     time_stamp = get_timestamp()
     print(time_stamp)
@@ -45,6 +45,9 @@ def sending_data(rfid_data):
         "timestamp": time_stamp
     }
     print("working...")
+    text.set("working...")
+    root.update_idletasks()
+    root.update()
     req = session.post(
     BASE_URL + API_AUTH_UPDATE, json=_rdata,
     allow_redirects=True
@@ -62,11 +65,13 @@ def sending_data(rfid_data):
 def scan_barcode(rfid_data):
     global text, label
     start_time = t.time()
-    while(t.time() < start_time + 30):
+    while(t.time() < start_time + 10):
         barcode_data = barcode.readline().decode('ASCII')
         if (len(barcode_data) > 0):
             print(barcode_data)
+            
             if(barcode_data[0].isupper() and barcode_data[1:-1].isdigit() and barcode_data[-1]=="0"):
+                # doing register
                 time_stamp = get_timestamp()
                 _data = {
                         "RFID": rfid_data,
@@ -74,11 +79,37 @@ def scan_barcode(rfid_data):
                         "timestamp": time_stamp
                     }
                 req = session.post(
-                BASE_URL + API_AUTH_REGISTER, json=_data,
-                allow_redirects=True
+                    BASE_URL + API_AUTH_REGISTER, json=_data,
+                    allow_redirects=True
                 )
                 print(req.json())
+            
+                # doing update
+                _rdata = {
+                        "RFID": rfid_data,
+                        # "RFID": "B508C347", 
+                        "timestamp": time_stamp
+                    }
+                print("working...")
+                text.set("working...")
+                root.update_idletasks()
+                root.update()
+                req = session.post(
+                    BASE_URL + API_AUTH_UPDATE, json=_rdata,
+                    allow_redirects=True
+                )
+                req_dict = req.json()
+                if not req_dict['flag']:
+                    print("ERROR")
+                    text.set("ERROR!\n\nPlease inform Administrator")
+                    label.configure(bg = "red")
+                    root.update_idletasks()
+                    root.update()
+                    t.sleep(1000)
+                    exit(2)
+                
                 return barcode_data[:-1]
+            
             else:
                 print("not student id")
                 text.set("Not student id!\n\nScan again.")
