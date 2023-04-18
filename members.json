@@ -1,0 +1,9 @@
+{"_id":{"$oid":"62c321ade09ce764588e7e7e"},"displayName":"B07901022","role":"student","RFID":"A5280938","studentID":"B07901022","createdTime":"2022-07-05 01:21:49","__v":0}
+{"_id":{"$oid":"62c3f8a9e09ce764588e7e91"},"displayName":"B10901089","role":"student","RFID":"250A1D48","studentID":"B10901089","createdTime":"2022-07-05 16:39:05","__v":0}
+{"_id":{"$oid":"62c406b9e09ce764588e7e9f"},"displayName":"B08901081","role":"student","RFID":"D5B8063D","studentID":"B08901081","createdTime":"2022-07-05 17:39:05","__v":0}
+{"_id":{"$oid":"62c53ffbe09ce764588e7eb3"},"displayName":"B10901005","role":"student","RFID":"E55DBF48","studentID":"B10901005","createdTime":"2022-07-06 15:55:39","__v":0}
+{"_id":{"$oid":"62c54150e09ce764588e7ebe"},"displayName":"B08901152","role":"student","RFID":"1550AA3C","studentID":"B08901152","createdTime":"2022-07-06 16:01:19","__v":0}
+{"_id":{"$oid":"62c54670e09ce764588e7ec5"},"displayName":"B10901099","role":"student","RFID":"35EC2448","studentID":"B10901099","createdTime":"2022-07-06 16:23:12","__v":0}
+{"_id":{"$oid":"62c54a40e09ce764588e7ecc"},"displayName":"B09901009","role":"student","RFID":"F539CD48","studentID":"B09901009","createdTime":"2022-07-06 16:39:27","__v":0}
+{"_id":{"$oid":"62c55e31e09ce764588e7ed6"},"displayName":"B10901061","role":"student","RFID":"B508C347","studentID":"B10901061","createdTime":"2022-07-06 18:04:33","__v":0}
+{"_id":{"$oid":"62ca729fe09ce764588f3ebc"},"displayName":"B10901002","role":"student","RFID":"A5280939","studentID":"B10901002","createdTime":"2022-07-10 10:41:00","__v":0}

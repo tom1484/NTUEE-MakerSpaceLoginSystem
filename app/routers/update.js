@@ -21,8 +21,8 @@ router.post("/update", async (req, res) => {
             personalInfo: member._id,
             timestamp: post_data.timestamp
         };
-        console.log(record_data);
-        
+        // console.log(record_data);
+
         const record = new Record(record_data);
         record.save().then((record) => {
             console.log(record);
